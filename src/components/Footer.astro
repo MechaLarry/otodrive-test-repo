@@ -1,0 +1,194 @@
+---
+/**
+ * Site footer. Replaces the hand-copied footer markup from every HTML file.
+ * Note: the old footer linked to blog.html, which does not exist - that dead
+ * link is intentionally omitted here until the blog is built.
+ */
+import { site, nav, branches, services, maps } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__col">
+      <a class="site-footer__brand" href="/">
+        <img src={site.logo} alt={`${site.name} logo`} width="150" height="48" />
+      </a>
+      <p class="site-footer__blurb">{site.tagline}</p>
+      <ul class="site-footer__social">
+        <li>
+          <a href={site.social.facebook} rel="noopener" target="_blank">
+            <span class="visually-hidden">Facebook</span>
+            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a href={site.social.x} rel="noopener" target="_blank">
+            <span class="visually-hidden">X</span>
+            <i class="fab fa-x-twitter" aria-hidden="true"></i>
+          </a>
+        </li>
+        <li>
+          <a href={site.social.instagram} rel="noopener" target="_blank">
+            <span class="visually-hidden">Instagram</span>
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Footer">
+      <h2 class="site-footer__title">Quick Links</h2>
+      <ul class="site-footer__list">
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        <li><a href="/get-quote.html">Get a Quote</a></li>
+        <li><a href="/booking.html">Book a Service</a></li>
+      </ul>
+    </nav>
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__title">Our Services</h2>
+      <ul class="site-footer__list">
+        {services.map((service) => <li><a href="/services.html">{service}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__title">Branches</h2>
+      <ul class="site-footer__list">
+        {
+          branches.map((branch) => (
+            <li>
+              <a href={`/maps.html#${branch.id}`}>{branch.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="site-footer__col">
+      <h2 class="site-footer__title">Contact</h2>
+      <ul class="site-footer__list">
+        <li><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li>
+          <a href={maps.view(branches[0])} rel="noopener" target="_blank">
+            {site.address.street}, {site.address.locality}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__bar">
+    <div class="container site-footer__bar-inner">
+      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <p>
+        <a href="/licenses.html">Licenses &amp; Compliance</a>
+        <span aria-hidden="true">·</span>
+        <a href="/maps.html">Locations</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.72);
+    padding-top: var(--space-9);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: var(--space-7);
+    padding-bottom: var(--space-8);
+  }
+
+  .site-footer__brand img {
+    width: auto;
+    height: 48px;
+    /* The logo artwork is dark - invert so it reads on the dark footer. */
+    filter: brightness(0) invert(1);
+  }
+
+  .site-footer__blurb {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    max-width: 34ch;
+  }
+
+  .site-footer__title {
+    margin-bottom: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .site-footer__list {
+    display: grid;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+  }
+
+  .site-footer a {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .site-footer a:hover {
+    color: var(--brand);
+  }
+
+  .site-footer__social {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-pill);
+    transition: background-color var(--ease), border-color var(--ease);
+  }
+
+  .site-footer__social a:hover {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--ink);
+  }
+
+  .site-footer__bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-block: var(--space-5);
+  }
+
+  .site-footer__bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: space-between;
+    font-size: var(--text-xs);
+  }
+
+  .site-footer__bar-inner a {
+    margin-inline: var(--space-1);
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

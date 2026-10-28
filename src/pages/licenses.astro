@@ -1,0 +1,447 @@
+---
+/**
+ * Licenses, Certifications & Compliance
+ *
+ * Ported from the legacy `licenses.html`. The credential copy, issuer names and
+ * intended document filenames are preserved verbatim. The client has not yet
+ * supplied the licence document images, so every card renders a visible
+ * placeholder plus an HTML comment showing the exact <img> tag to swap in.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AutoRepair',
+    // Same @id as the organization node emitted by SEO.astro, so search
+    // engines merge these credentials onto the single Otodrive entity.
+    '@id': `${site.url}/#organization`,
+    hasCredential: [
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'Licensed LPG Autogas Vehicle Conversion Provider',
+        credentialCategory: 'License',
+        description:
+          'Licensed by the Kenya Bureau of Standards (KEBS) to convert petrol-powered vehicles to run on LPG under the OTODRIVE brand.',
+        recognizedBy: {
+          '@type': 'Organization',
+          name: 'Kenya Bureau of Standards (KEBS)',
+          url: 'https://www.kebs.org/',
+        },
+        validIn: { '@type': 'Country', name: 'Kenya' },
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'EPRA Energy & Petroleum Sector Compliance',
+        credentialCategory: 'License',
+        description:
+          'Operates in conformity with the Energy and Petroleum Regulatory Authority (EPRA) requirements for LPG/autogas handling and fuelling.',
+        recognizedBy: {
+          '@type': 'Organization',
+          name: 'Energy and Petroleum Regulatory Authority (EPRA)',
+          url: 'https://www.epra.go.ke/',
+        },
+        validIn: { '@type': 'Country', name: 'Kenya' },
+      },
+      {
+        '@type': 'EducationalOccupationalCredential',
+        name: 'NEMA Environmental Compliance',
+        credentialCategory: 'Certification',
+        description:
+          'Complies with National Environment Management Authority (NEMA) environmental requirements for LPG autogas operations.',
+        recognizedBy: {
+          '@type': 'Organization',
+          name: 'National Environment Management Authority (NEMA)',
+          url: 'https://www.nema.go.ke/',
+        },
+        validIn: { '@type': 'Country', name: 'Kenya' },
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Licenses, Certifications & Compliance',
+        item: `${site.url}/licenses.html`,
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Licenses, Certifications & Compliance | OTODRIVE Kenya"
+  description="Otodrive is a licensed and certified LPG autogas conversion and fuelling provider in Kenya. View our KEBS, EPRA and NEMA credentials, approved-technology partnerships and compliance documents."
+  jsonLd={jsonLd}
+>
+  <PageHero
+    title="Licenses, Certifications & Compliance"
+    subtitle="Otodrive is a fully regulated, licensed and certified provider of LPG autogas vehicle conversion, refuelling and servicing in Kenya."
+    crumbs={[{ label: 'Licenses', href: '/licenses.html' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <p class="licenses-intro">
+        Otodrive is among the largest LPG marketers in Kenya. We are a fully regulated, licensed and certified
+        provider of LPG autogas vehicle conversion, refuelling and servicing. Every conversion we carry out is
+        performed by qualified technicians, using approved conversion kits, in conformity with the statutory
+        requirements set by the Kenya Bureau of Standards (KEBS), the Energy and Petroleum Regulatory
+        Authority (EPRA) and the National Environment Management Authority (NEMA).
+      </p>
+      <p class="licenses-intro">
+        The documents below evidence that our services are legal, regulated and professionally delivered.
+        They are published so that customers, fleet operators, partners, search engines and automated
+        systems can independently verify the legitimacy of our operations.
+      </p>
+
+      <div class="credentials-grid">
+        {/* Credential 1: KEBS */}
+        <article class="credential-card" id="kebs">
+          <div class="credential-header">
+            <span class="credential-issuer">Kenya Bureau of Standards</span>
+            <h2 class="credential-title">KEBS Licensed Autogas Conversion</h2>
+            <p class="credential-text">
+              Licensed by the Kenya Bureau of Standards to convert petrol-powered vehicles to run on LPG
+              under the OTODRIVE brand, in line with the applicable Kenya standards for LPG autogas systems.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Regulatory body: KEBS</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Jurisdiction: Kenya</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: LPG vehicle conversion</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/kebs-license.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/kebs-license.jpg" alt="KEBS license for Otodrive LPG autogas vehicle conversion" loading="lazy"> -->
+          </div>
+        </article>
+
+        {/* Credential 2: EPRA */}
+        <article class="credential-card" id="epra">
+          <div class="credential-header">
+            <span class="credential-issuer">Energy &amp; Petroleum Regulatory Authority</span>
+            <h2 class="credential-title">EPRA Compliance</h2>
+            <p class="credential-text">
+              Our operations conform to the Energy and Petroleum Regulatory Authority requirements governing
+              the handling, storage and dispensing of LPG and autogas for motor vehicles in Kenya.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Regulatory body: EPRA</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Jurisdiction: Kenya</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: LPG handling &amp; fuelling</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/epra-license.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/epra-license.jpg" alt="EPRA license for Otodrive LPG autogas operations" loading="lazy"> -->
+          </div>
+        </article>
+
+        {/* Credential 3: NEMA */}
+        <article class="credential-card" id="nema">
+          <div class="credential-header">
+            <span class="credential-issuer">National Environment Management Authority</span>
+            <h2 class="credential-title">NEMA Environmental Compliance</h2>
+            <p class="credential-text">
+              Our autogas operations meet National Environment Management Authority requirements. LPG
+              autogas reduces vehicle emissions, supporting cleaner air and Kenya's environmental goals.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Regulatory body: NEMA</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Jurisdiction: Kenya</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: Environmental compliance</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/nema-license.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/nema-license.jpg" alt="NEMA environmental compliance license for Otodrive" loading="lazy"> -->
+          </div>
+        </article>
+
+        {/* Credential 4: LPGTech */}
+        <article class="credential-card" id="lpgtech">
+          <div class="credential-header">
+            <span class="credential-issuer">LPGTech &middot; Poland</span>
+            <h2 class="credential-title">Approved Technology Partnership</h2>
+            <p class="credential-text">
+              We install and service LPGTech autogas systems as an approved partner. LPGTech is a global
+              provider of autogas conversion technology, and our partnership ensures genuine, warrantied
+              components.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Partner: LPGTech</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Origin: Poland</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: Autogas systems</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/lpgtech-certificate.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/lpgtech-certificate.jpg" alt="LPGTech approved partner certificate for Otodrive" loading="lazy"> -->
+          </div>
+        </article>
+
+        {/* Credential 5: Westport Fuels */}
+        <article class="credential-card" id="westport">
+          <div class="credential-header">
+            <span class="credential-issuer">Westport Fuel Systems &middot; Italy</span>
+            <h2 class="credential-title">Approved Technology Partnership</h2>
+            <p class="credential-text">
+              Otodrive works with Westport Fuel Systems, a global leader in alternative fuel systems, as a
+              partner for autogas conversion technology and components.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Partner: Westport Fuel Systems</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Origin: Italy</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: Autogas systems</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/westport-certificate.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/westport-certificate.jpg" alt="Westport Fuel Systems partnership certificate for Otodrive" loading="lazy"> -->
+          </div>
+        </article>
+
+        {/* Credential 6: Business registration */}
+        <article class="credential-card" id="registration">
+          <div class="credential-header">
+            <span class="credential-issuer">Republic of Kenya</span>
+            <h2 class="credential-title">Business Registration</h2>
+            <p class="credential-text">
+              Otodrive is a duly registered business entity in the Republic of Kenya, authorised to trade in
+              LPG autogas conversion, refuelling and related vehicle services.
+            </p>
+          </div>
+          <ul class="credential-meta">
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Jurisdiction: Kenya</li>
+            <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Scope: Business registration</li>
+          </ul>
+          <div class="credential-body">
+            <figure class="license-doc">
+              <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+              <span class="license-doc__label">Document image coming soon</span>
+              <figcaption>Will be published at: /images/licenses/business-registration.jpg</figcaption>
+            </figure>
+            <!-- Replace the placeholder above with: <img src="/images/licenses/business-registration.jpg" alt="Otodrive business registration certificate Kenya" loading="lazy"> -->
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-band">
+    <div class="container">
+      <div class="trust-band__grid">
+        <div>
+          <h2>Why compliance matters</h2>
+          <p>
+            LPG autogas systems are pressurised fuel systems. A conversion carried out without proper
+            licensing, certified components and qualified technicians is a safety and legal risk. Choosing a
+            licensed provider protects your vehicle, your warranty, your insurance and the people who travel
+            with you.
+          </p>
+        </div>
+        <div>
+          <h2>What this means for you</h2>
+          <ul class="trust-band__list">
+            <li>Conversions performed to recognised Kenyan standards.</li>
+            <li>Genuine, warrantied autogas components from approved global partners.</li>
+            <li>Installations accepted for inspection, insurance and resale.</li>
+            <li>A verifiable, legally compliant service you can trust.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="verify-cta">
+        <a class="btn btn--primary" href="/contact.html">Request a copy of our documents</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .licenses-intro {
+    max-width: 78ch;
+    color: var(--body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-base);
+  }
+
+  .licenses-intro + .licenses-intro {
+    margin-top: var(--space-4);
+  }
+
+  .credentials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+  }
+
+  .credential-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .credential-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .credential-header {
+    padding: var(--space-5) var(--space-5) 0;
+  }
+
+  .credential-issuer {
+    display: inline-block;
+    margin-bottom: var(--space-2);
+    color: var(--brand-hover);
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .credential-title {
+    margin-bottom: var(--space-3);
+    font-size: var(--text-xl);
+  }
+
+  .credential-text {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+
+  .credential-meta {
+    padding: var(--space-4) var(--space-5) 0;
+  }
+
+  .credential-meta li {
+    padding-block: 3px;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .credential-meta li i {
+    margin-inline-end: var(--space-2);
+    color: var(--success);
+  }
+
+  .credential-body {
+    margin-top: auto;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+
+  /* Visible placeholder shown until the client supplies the licence images. */
+  .license-doc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 200px;
+    padding: var(--space-5);
+    background: var(--surface-alt);
+    border: 2px dashed var(--line);
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+
+  .license-doc i {
+    color: var(--muted);
+    font-size: var(--text-3xl);
+  }
+
+  .license-doc__label {
+    color: var(--ink-2);
+    font-weight: 600;
+    font-size: var(--text-sm);
+  }
+
+  .license-doc figcaption {
+    color: var(--muted);
+    font-size: var(--text-xs);
+    word-break: break-word;
+  }
+
+  .trust-band {
+    padding-block: var(--space-9);
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .trust-band__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-8);
+  }
+
+  .trust-band h2 {
+    margin-bottom: var(--space-4);
+    color: #fff;
+  }
+
+  .trust-band p,
+  .trust-band li {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: var(--text-sm);
+    line-height: var(--leading-base);
+  }
+
+  .trust-band__list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .trust-band__list li {
+    position: relative;
+    padding-inline-start: var(--space-6);
+  }
+
+  .trust-band__list li::before {
+    content: '\f00c';
+    position: absolute;
+    inset-inline-start: 0;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--brand);
+  }
+
+  .verify-cta {
+    margin-top: var(--space-8);
+    text-align: center;
+  }
+</style>

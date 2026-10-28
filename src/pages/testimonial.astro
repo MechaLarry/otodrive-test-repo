@@ -1,0 +1,154 @@
+---
+/**
+ * Testimonials - ported from the legacy testimonial.html.
+ *
+ * The six client testimonials below are the real quotes published across the
+ * three slides of the legacy carousel, each appearing here exactly once. No
+ * testimonials, names or ratings are invented - the legacy page carried no
+ * star ratings, so none are shown.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+interface Testimonial {
+  name: string;
+  location: string;
+  quote: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    name: 'Jane M.',
+    location: 'Nairobi',
+    quote:
+      "Switching to LPG has been a game-changer for me! Not only is the fuel cost lower, but I also feel good about reducing my carbon footprint. My car runs just as smoothly, and I'm saving a significant amount each month on fuel expenses. It's great to know I'm doing something for the environment too!",
+  },
+  {
+    name: 'Chris O.',
+    location: 'Nairobi',
+    quote:
+      "At first, I was skeptical about converting my car to LPG, but now I can't imagine going back! LPG is way more economical, and I've cut my fuel costs by almost 40%. The conversion process was smooth, and I've noticed that my engine even runs quieter. I highly recommend it to anyone considering the switch.",
+  },
+  {
+    name: 'Violet T.',
+    location: 'Athi River',
+    quote:
+      'The conversion to LPG has helped me enjoy driving without worrying about the cost. I was unsure at first, but the savings have been amazing. Plus, I feel great about using a cleaner fuel. My car runs beautifully, and I love knowing I\u2019m making a sustainable choice!',
+  },
+  {
+    name: 'Ahmed R.',
+    location: 'Kitengela',
+    quote:
+      "LPG conversion was honestly the best decision for my car. It's so affordable compared to petrol, and I don't feel any difference in performance. I used to spend a lot on fuel each month, but now I can put that extra money into other things. It's a win-win for me!",
+  },
+  {
+    name: 'Lucy N.',
+    location: 'Thika',
+    quote:
+      "Going LPG was the right choice. With the rising costs of petrol, I wanted a solution that would be both economical and reliable. The savings have been real! I can drive more freely without worrying about fuel prices as much. It's efficient, smooth, and surprisingly easy to maintain.",
+  },
+  {
+    name: 'John K.',
+    location: 'Nairobi',
+    quote:
+      "After converting to LPG, I've noticed a big difference in my wallet! I'm saving on fuel without compromising performance. The car feels just as powerful, and the conversion was easier than I expected. It's amazing how much cleaner it is, too. I'd encourage anyone thinking about it to make the switch.",
+  },
+];
+---
+
+<BaseLayout
+  title="Testimonials | Otodrive Kenya LPG Autogas Conversions"
+  description="Read what Otodrive customers across Nairobi, Athi River, Kitengela and Thika say about switching to LPG autogas, from lower fuel costs to smoother, cleaner driving."
+>
+  <PageHero
+    title="Testimonials"
+    subtitle="Real feedback from Kenyan drivers who have converted their vehicles to LPG autogas with Otodrive."
+    crumbs={[{ label: 'Testimonials', href: '/testimonial.html' }]}
+  />
+
+  <section class="section testimonials">
+    <div class="container">
+      <h2 class="visually-hidden">What our clients say</h2>
+
+      <ul class="testimonial-grid">
+        {
+          testimonials.map((testimonial) => (
+            <li>
+              <figure class="testimonial">
+                <i class="fa-solid fa-quote-left testimonial__icon" aria-hidden="true" />
+                <blockquote class="testimonial__quote">
+                  <p>{testimonial.quote}</p>
+                </blockquote>
+                <figcaption class="testimonial__author">
+                  <cite class="testimonial__name">{testimonial.name}</cite>
+                  <span class="testimonial__location">{testimonial.location}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .testimonials {
+    background: var(--surface-alt);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .testimonial-grid > li {
+    display: flex;
+  }
+
+  .testimonial {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .testimonial__icon {
+    color: var(--brand);
+    font-size: var(--text-2xl);
+  }
+
+  .testimonial__quote p {
+    color: var(--body);
+    font-size: var(--text-base);
+  }
+
+  .testimonial__author {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+
+  .testimonial__name {
+    color: var(--ink);
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .testimonial__location {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+</style>

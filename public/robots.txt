@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Block the API and source folders from being crawled
+Disallow: /api/
+
+Sitemap: https://otodriveafrica.com/sitemap-index.xml

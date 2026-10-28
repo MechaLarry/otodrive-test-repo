@@ -1,0 +1,661 @@
+---
+/**
+ * Homepage.
+ *
+ * Ported from the legacy `index.html`. All marketing copy (headlines, service
+ * blurbs, project write-ups and testimonials) is preserved verbatim; only the
+ * markup, the styling system and the accessibility treatment are new. The
+ * header and footer are rendered by BaseLayout, so this file owns content only.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+
+const hero = {
+  movie: '/images/lpgtech_conversion_movie.mp4',
+  /** Portrait banner for phones - supplied by the client alongside the wide cut. */
+  movieMobile: '/images/lpgtech_conversion_movie-mobile.mp4',
+  poster: '/images/canopy%202.jpg',
+};
+
+/** Real figures only - each is taken directly from the legacy copy. */
+const stats = [
+  { value: '40%', label: 'Fuel saving versus regular petrol' },
+  { value: '24/7', label: 'Open for our customers' },
+  { value: 'KEBS', label: 'Licensed to convert vehicles' },
+  { value: 'Free', label: 'LPG system check for Autogas vehicles' },
+];
+
+const services = [
+  {
+    icon: '/images/Iconka-Home-Sweet-Home-Gas-Station.128.png',
+    iconAlt: 'LPG refuelling station pump',
+    title: 'LPG fueling',
+    text: 'We offer Autogas refueling and adhere to our customer satisfaction program. Our LPG is competitively priced and ensures you save upto 40% over regular petrol.',
+  },
+  {
+    icon: '/images/icon-2.png',
+    iconAlt: 'Autogas system installation',
+    title: 'Autogas System Installation',
+    text: 'We install Autogas system manufactured by the best manufacturers in the world. In partnership with global leading providers such as...',
+  },
+  {
+    icon: '/images/icon-3.png',
+    iconAlt: 'Vehicle diagnosis equipment',
+    title: 'Vehicle Diagnosis',
+    text: 'Here at Otodrive, we believe the customer should enjoy their new vehicle just as you would your mobile electronic devices. We realised...',
+  },
+  {
+    icon: '/images/icon-4.png',
+    iconAlt: 'Autogas system check and service',
+    title: 'Autogas system check and service',
+    text: 'When in doubt, come get your kit checked out! We offer free LPG system check for all Autogas vehicles. Our company is dedicated to ensure...',
+  },
+];
+
+const values = [
+  'KS compliant and licensed by KEBS',
+  'State of the art workshop',
+  'Certified engineers',
+  'Genuine Autogas kits from Westport Fuels (Italy) and LPGTech (Poland)',
+];
+
+const projects = [
+  {
+    image: '/images/george2.jpg',
+    alt: 'Toyota Passo after an LPG autogas bi-fuel conversion at Otodrive',
+    title: 'Toyota Passo',
+    text: 'The Toyota Passo is a compact car known for its fuel efficiency and versatility. Converting it to a bi-fuel system allows the vehicle to run on two different types of fuel typically petrol...',
+  },
+  {
+    image: '/images/milton%20conversion%20.jpg',
+    alt: 'Toyota Allion upgraded with a bi-fuel LPG autogas system',
+    title: 'Toyota Allion',
+    text: 'The Toyota Allion, a sedan renowned for its elegance and reliability, has been elevated to a new level of efficiency and versatility with a state-of-the-art bi-fuel system upgrade. This...',
+  },
+  {
+    image: '/images/pado%20conversion.jpg',
+    alt: 'Toyota Prado converted to run on bi-fuel LPG autogas',
+    title: 'Prado',
+    text: 'The Toyota Prado, a symbol of rugged luxury and unmatched capability, has been revolutionized with a cutting-edge bi-fuel system upgrade. This innovation enables the Prado to effortlessly...',
+  },
+  {
+    image: '/images/technical%20autogas.jpg',
+    alt: 'Diagram of a typical LPG autogas layout in a vehicle',
+    title: 'Typical LPG Autogas Layout',
+    text: 'A typical LPG autogas layout consists of an LPG storage tank, usually installed in the boot or underneath the vehicle, connected to a fuel line that runs to the engine...',
+  },
+  {
+    image: '/images/technical%202%20autogas.jpg',
+    alt: 'Diagram of LPG autogas system parts and components',
+    title: 'Autogas Parts',
+    text: 'A typical LPG autogas system comprises key components such as an LPG tank, fuel lines, a vaporizer-reducer, injectors, a fuel selection switch, and an electronic control unit (ECU). The tank stores LPG safely....',
+  },
+  {
+    image: '/images/canopy%202.jpg',
+    alt: 'Otodrive LPG autogas refuelling station canopy',
+    title: 'Refueling station',
+    text: 'At Otodrive, we provide a state-of-the-art LPG refueling station designed for efficiency and convenience. Our station is equipped with high-quality dispensers that ensure quick, safe, and....',
+  },
+];
+
+const testimonials = [
+  {
+    name: 'Jane M.',
+    location: 'Nairobi',
+    quote: `"Switching to LPG has been a game-changer for me! Not only is the fuel cost lower, but I also feel good about reducing my carbon footprint. My car runs just as smoothly, and I'm saving a significant amount each month on fuel expenses. It's great to know I'm doing something for the environment too!"`,
+  },
+  {
+    name: 'Chris O.',
+    location: 'Nairobi',
+    quote: `"At first, I was skeptical about converting my car to LPG, but now I can't imagine going back! LPG is way more economical, and I've cut my fuel costs by almost 40%. The conversion process was smooth, and I've noticed that my engine even runs quieter. I highly recommend it to anyone considering the switch."`,
+  },
+  {
+    name: 'Violet T.',
+    location: 'Athi River',
+    quote: `"The conversion to LPG has helped me enjoy driving without worrying about the cost. I was unsure at first, but the savings have been amazing. Plus, I feel great about using a cleaner fuel. My car runs beautifully, and I love knowing I'm making a sustainable choice!"`,
+  },
+  {
+    name: 'Ahmed R.',
+    location: 'Kitengela',
+    quote: `"LPG conversion was honestly the best decision for my car. It's so affordable compared to petrol, and I don't feel any difference in performance. I used to spend a lot on fuel each month, but now I can put that extra money into other things. It's a win-win for me!"`,
+  },
+  {
+    name: 'Lucy N.',
+    location: 'Thika',
+    quote: `"Going LPG was the right choice. With the rising costs of petrol, I wanted a solution that would be both economical and reliable. The savings have been real! I can drive more freely without worrying about fuel prices as much. It's efficient, smooth, and surprisingly easy to maintain."`,
+  },
+  {
+    name: 'John K.',
+    location: 'Nairobi',
+    quote: `"After converting to LPG, I've noticed a big difference in my wallet! I'm saving on fuel without compromising performance. The car feels just as powerful, and the conversion was easier than I expected. It's amazing how much cleaner it is, too. I'd encourage anyone thinking about it to make the switch."`,
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: `${site.url}/`,
+    description: site.description,
+    inLanguage: 'en-KE',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Otodrive | LPG Autogas Conversion & Services in Kenya"
+  description={site.description}
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <video
+      class="hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster={hero.poster}
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src={hero.movieMobile} type="video/mp4" media="(max-width: 767px)" />
+      <source src={hero.movie} type="video/mp4" />
+    </video>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <p class="hero__eyebrow">{site.tagline}</p>
+      <h1>AUTOGAS SERVICES</h1>
+      <p class="hero__lead">
+        Otodrive is an authorized Autogas system installer. We are an innovative solutions leader using
+        technology to ensure superior safety, high quality and excellence.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/contact.html">Contact Us</a>
+        <a class="btn btn--ghost" href="/about.html">About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="container">
+      <h2 class="visually-hidden">Otodrive at a glance</h2>
+      <ul class="stats__grid">
+        {
+          stats.map((stat) => (
+            <li class="stats__item">
+              <span class="stats__value">{stat.value}</span>
+              <span class="stats__label">{stat.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <p class="section-lead">We love supporting our customers by offering a variety of services</p>
+
+      <ul class="services__grid">
+        {
+          services.map((service) => (
+            <li class="service-card">
+              <img class="service-card__icon" src={service.icon} alt={service.iconAlt} loading="lazy" />
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+              <a class="card-link" href="/services.html">Read More</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container about__grid">
+      <div>
+        <h2>About Us</h2>
+        <p class="about__text">
+          Otodrive is among the largest LPG marketers in Kenya. In partnership with global leading providers
+          such as Westport Fuels (Italy) and LPGTech (Poland) of Autogas Systems, we are licensed by KEBS to
+          convert gasoline-powered vehicles to run on LPG under our brand, OTODRIVE.
+        </p>
+
+        <h3 class="about__subhead">Why Otodrive?</h3>
+        <p class="about__text">
+          We offer high quality, affordable Autogas products with warrant. Otodrive is distinguished by
+          combination of innovative thought and continuous improvement of automobile technology.
+        </p>
+        <ul class="about__values">
+          {values.map((value) => <li>{value}</li>)}
+        </ul>
+        <p class="about__note">Otodrive Service Center &mdash; elevate your experience to keep moving.</p>
+
+        <a class="btn btn--primary about__cta" href="/about.html">Read More</a>
+      </div>
+
+      <figure class="about__media">
+        <video
+          class="about__video"
+          controls
+          muted
+          playsinline
+          preload="metadata"
+          poster="/images/technical%20autogas.jpg"
+        >
+          <source src="/images/LPG-Service.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Watch our LPG Autogas service in action at the Otodrive workshop.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Projects</h2>
+
+      <ul class="projects__grid">
+        {
+          projects.map((project) => (
+            <li class="project-card">
+              <img src={project.image} alt={project.alt} loading="lazy" />
+              <div class="project-card__body">
+                <h3>{project.title}</h3>
+                <p>{project.text}</p>
+                <a class="card-link" href="/projects.html">Read More</a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <h2>Testimonial</h2>
+
+      <ul class="testimonials__grid">
+        {
+          testimonials.map((testimonial) => (
+            <li>
+              <figure class="testimonial">
+                <i class="fa-solid fa-quote-left testimonial__icon" aria-hidden="true"></i>
+                <blockquote>{testimonial.quote}</blockquote>
+                <figcaption>
+                  {testimonial.name}
+                  <span class="testimonial__location">{testimonial.location}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ready to save up to 40% on fuel?"
+    text="Otodrive is an authorized Autogas system installer. Book a service or request a free quote today."
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero -------------------------------------------------------------- */
+
+  .hero {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: clamp(30rem, 68vh, 44rem);
+    overflow: hidden;
+    background: var(--ink);
+    isolation: isolate;
+  }
+
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* Dark scrim derived from --ink so the headline stays readable over the video. */
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 35, 0.8) 0%,
+      rgba(10, 10, 35, 0.55) 45%,
+      rgba(10, 10, 35, 0.88) 100%
+    );
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: var(--space-10);
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    padding: var(--space-1) var(--space-4);
+    background: rgba(253, 164, 23, 0.16);
+    color: var(--brand);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    max-width: 16ch;
+    color: #fff;
+    font-size: var(--text-5xl);
+  }
+
+  .hero__lead {
+    max-width: 56ch;
+    margin-top: var(--space-5);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--text-lg);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
+
+  /* Ghost buttons need a light treatment over the dark video. */
+  .hero .btn--ghost {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
+  }
+
+  .hero .btn--ghost:hover {
+    background: #fff;
+    border-color: #fff;
+    color: var(--ink);
+  }
+
+  /* ---- Stats / value strip ---------------------------------------------- */
+
+  .stats {
+    padding-block: var(--space-7);
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: var(--space-6);
+  }
+
+  .stats__value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    line-height: var(--leading-tight);
+    color: var(--brand);
+  }
+
+  .stats__label {
+    display: block;
+    margin-top: var(--space-2);
+    font-size: var(--text-sm);
+  }
+
+  /* ---- Shared section helpers ------------------------------------------- */
+
+  .section-lead {
+    max-width: 60ch;
+    margin-top: var(--space-4);
+    color: var(--body);
+    font-size: var(--text-lg);
+  }
+
+  .card-link {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  /* ---- Services ---------------------------------------------------------- */
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .service-card__icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-4);
+    object-fit: contain;
+  }
+
+  .service-card h3 {
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+  }
+
+  .service-card p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+
+  /* ---- About ------------------------------------------------------------- */
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .about__text {
+    max-width: 60ch;
+    margin-top: var(--space-4);
+  }
+
+  .about__subhead {
+    margin-top: var(--space-6);
+    color: var(--brand-hover);
+  }
+
+  .about__values {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .about__values li {
+    position: relative;
+    padding-inline-start: var(--space-6);
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  .about__values li::before {
+    content: '\f00c';
+    position: absolute;
+    inset-inline-start: 0;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--brand);
+  }
+
+  .about__note {
+    margin-top: var(--space-5);
+    color: var(--ink-2);
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  .about__cta {
+    margin-top: var(--space-6);
+  }
+
+  .about__media {
+    margin: 0;
+  }
+
+  .about__video {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: var(--dark);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .about__media figcaption {
+    margin-top: var(--space-3);
+    color: var(--muted);
+    font-size: var(--text-xs);
+  }
+
+  /* ---- Projects ---------------------------------------------------------- */
+
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-7);
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .project-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .project-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .project-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: var(--space-5);
+  }
+
+  .project-card h3 {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-lg);
+  }
+
+  .project-card p {
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+  }
+
+  /* ---- Testimonials ------------------------------------------------------ */
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+
+  .testimonial {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .testimonial__icon {
+    margin-bottom: var(--space-3);
+    color: var(--brand);
+    font-size: var(--text-xl);
+  }
+
+  .testimonial blockquote {
+    margin: 0;
+    color: var(--body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-base);
+  }
+
+  .testimonial figcaption {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .testimonial__location {
+    display: block;
+    margin-top: var(--space-1);
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 500;
+  }
+</style>

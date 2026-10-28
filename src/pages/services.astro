@@ -1,0 +1,164 @@
+---
+/**
+ * Services page - ported from the legacy services.html.
+ *
+ * The four services below are the real legacy services with their original
+ * copy preserved verbatim. The legacy titles do not match the shorter
+ * `services` export in src/data/site.ts (no descriptions there either), so the
+ * cards are typed inline rather than mapped.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+interface ServiceCard {
+  icon: string;
+  title: string;
+  text: string;
+  href: string;
+  linkLabel: string;
+}
+
+const cards: ServiceCard[] = [
+  {
+    icon: 'fa-solid fa-gas-pump',
+    title: 'LPG fueling',
+    text: "We offer LPG refueling and a customer loyalty program. Our LPG is competitively priced and ensures you save upto 40% over regular petrol. We enjoy seeing customers benefit from our excellent services provided as you refuel such as ensuring your car is operating at peak performance by checking your fluid levels and clearing your view by washing your windsscreen. Our loyalty program enables clients to get rewards from fueling with us and the testimonies speak for themselves. Here, we put alot of effort in ensuring you get the best out of our services.",
+    href: '/get-quote.html',
+    linkLabel: 'Get a Quote',
+  },
+  {
+    icon: 'fa-solid fa-screwdriver-wrench',
+    title: 'Autogas System Installation',
+    text: "We install Autogas system manufactured by the best manufacturers in the world. In partnership with global leading providers such as Westport Fuels (Italy) and LPGTech (Poland) of Autogas Systems, we are licensed by KEBS to convert gasoline powered vehicles to run on LPG under our brand, OTODRIVE. We have the best technical team that will ensure your vehicle will attain the best milage while using the Autogas system and enjoy the benefits of having a hybrid fueling system.",
+    href: '/get-quote.html',
+    linkLabel: 'Get a Quote',
+  },
+  {
+    icon: 'fa-solid fa-stethoscope',
+    title: 'Free Car Diagnosis',
+    text: "Here at Otodrive, we believe the customer should enjoy their new vehicle just as you would your mobile electronic devices. We realised its unfair to charge a client on tasks such as diagnosis since its their way of analysing how well their technology works and to find out if there's any issues with their autogas system. We offer free vehicle diagnosis and ensure the customer uses their vehicle in its best condition.",
+    href: '/contact.html',
+    linkLabel: 'Contact Us',
+  },
+  {
+    icon: 'fa-solid fa-clipboard-check',
+    title: 'Free LPG system check and service',
+    text: "When in doubt, come get your kit checked out! We offer free LPG system check for all Autogas vehicles. Our company is dedicated to ensure all Autogas vehicles are safe on the roads. Traveling on a healthy car, cheap fuel and care free mood is what we aim for. We offer free LPG system check to ensure you can always know the condition of your vehicle and take the appropriate action when needed",
+    href: '/contact.html',
+    linkLabel: 'Contact Us',
+  },
+];
+---
+
+<BaseLayout
+  title="Our Services | LPG Autogas Conversion, Fueling & Diagnosis in Kenya"
+  description="Otodrive services in Kenya: LPG fueling with a customer loyalty program, Autogas system installation, free car diagnosis and a free LPG system check and service."
+>
+  <PageHero
+    title="Our Services"
+    eyebrow="What We Offer"
+    subtitle="We love supporting our customers by offer a variety of services"
+    crumbs={[{ label: 'Services', href: '/services.html' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="services-grid">
+        {
+          cards.map((card) => (
+            <li class="service-card">
+              <span class="service-card__icon" aria-hidden="true">
+                <i class={card.icon}></i>
+              </span>
+              <h2 class="service-card__title">{card.title}</h2>
+              <p class="service-card__text">{card.text}</p>
+              <a class="service-card__link" href={card.href}>
+                {card.linkLabel}
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+    gap: var(--space-6);
+  }
+
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--ease), box-shadow var(--ease),
+      transform var(--ease);
+  }
+
+  .service-card:hover {
+    border-color: var(--brand);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .service-card__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: var(--brand-soft);
+    color: var(--brand-hover);
+    font-size: var(--text-xl);
+  }
+
+  .service-card__title {
+    font-size: var(--text-lg);
+  }
+
+  .service-card__text {
+    font-size: var(--text-sm);
+  }
+
+  .service-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-2);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-sm);
+  }
+
+  .service-card__link i {
+    font-size: var(--text-xs);
+    transition: transform var(--ease);
+  }
+
+  .service-card__link:hover i {
+    transform: translateX(4px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-card:hover {
+      transform: none;
+    }
+
+    .service-card__link:hover i {
+      transform: none;
+    }
+  }
+</style>

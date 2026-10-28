@@ -1,0 +1,141 @@
+---
+/**
+ * All <head> metadata and structured data in one place.
+ * Rendered by BaseLayout so every page automatically gets:
+ *   - correct canonical URL
+ *   - Open Graph + Twitter cards
+ *   - site-wide Organization / AutoRepair JSON-LD
+ */
+import { site, branches, maps } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Path relative to the site root, e.g. "/images/hero.jpg". */
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  /** Additional JSON-LD nodes for this page. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = site.description,
+  image = site.logo,
+  type = 'website',
+  noindex = false,
+  jsonLd = [],
+} = Astro.props;
+
+const origin = Astro.site?.origin ?? site.url;
+const canonical = new URL(Astro.url.pathname, origin).href;
+const ogImage = new URL(image, origin).href;
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+
+/**
+ * Site-wide organisation node. Declared once with an @id so branch and
+ * credential nodes on other pages can reference it instead of repeating it.
+ */
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRepair',
+  '@id': `${origin}/#organization`,
+  name: site.name,
+  legalName: site.legalName,
+  url: origin,
+  image: ogImage,
+  logo: ogImage,
+  description: site.description,
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  sameAs: [site.social.facebook, site.social.x, site.social.instagram],
+  areaServed: branches.map((branch) => ({
+    '@type': 'City',
+    name: branch.city,
+  })),
+  location: branches.map((branch) => ({
+    '@type': ['AutoRepair', 'GasStation'],
+    '@id': `${origin}/maps.html#${branch.id}`,
+    name: branch.name,
+    url: `${origin}/maps.html#${branch.id}`,
+    telephone: branch.telephone,
+    hasMap: maps.view(branch),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: branch.city,
+      addressRegion: branch.region,
+      addressCountry: 'KE',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: branch.latitude,
+      longitude: branch.longitude,
+    },
+    openingHoursSpecification: branch.hours.map((slot) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: slot.days,
+      opens: slot.opens,
+      closes: slot.closes,
+    })),
+  })),
+};
+
+const nodes = [organization, ...jsonLd];
+
+const head = {
+  title: fullTitle,
+  description,
+  canonical,
+  ogImage,
+  type,
+  noindex,
+  nodes,
+};
+---
+
+<title>{head.title}</title>
+<meta name="description" content={head.description} />
+<link rel="canonical" href={head.canonical} />
+{head.noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content={head.type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={head.title} />
+<meta property="og:description" content={head.description} />
+<meta property="og:url" content={head.canonical} />
+<meta property="og:image" content={head.ogImage} />
+<meta property="og:locale" content="en_KE" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={head.title} />
+<meta name="twitter:description" content={head.description} />
+<meta name="twitter:image" content={head.ogImage} />
+
+<!-- Geo -->
+<meta name="geo.region" content="KE" />
+<meta name="geo.placename" content={site.address.locality} />
+<meta name="geo.position" content={`${site.geo.latitude};${site.geo.longitude}`} />
+<meta name="ICBM" content={`${site.geo.latitude}, ${site.geo.longitude}`} />
+
+<!-- Structured data -->
+{
+  head.nodes.map((node) => (
+    <script type="application/ld+json" set:html={JSON.stringify(node)} />
+  ))
+}

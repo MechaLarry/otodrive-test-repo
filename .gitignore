@@ -11,6 +11,10 @@ npm-debug.log*
 service-account.json
 credentials.json
 
+# Astro
+dist/
+.astro/
+
 # Logs
 logs
 *.log
@@ -40,4 +44,4 @@ Thumbs.db
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp

@@ -1,0 +1,49 @@
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Astro writes the whole site (HTML, assets, sitemap) into dist/
+          local-dir: ./dist/
+          server-dir: /public_html/
+          # Set to true only when you want removed files deleted from the server.
+          dangerous-clean-slate: false
+
+# Required repository secrets (Settings > Secrets and variables > Actions):
+#   FTP_SERVER    - cPanel FTP host, e.g. ftp.otodriveafrica.com
+#   FTP_USERNAME  - cPanel FTP account
+#   FTP_PASSWORD  - cPanel FTP password
+#
+# The booking API in /api is NOT deployed here - it stays on Render.

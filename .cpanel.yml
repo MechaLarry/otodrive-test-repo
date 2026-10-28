@@ -1,28 +1,23 @@
 ---
 deployment:
   tasks:
-    # Frontend deployment to cPanel (only static files)
+    # Deploys the Astro build output to cPanel.
+    #
+    # Only used if you deploy through cPanel's Git Version Control feature.
+    # If you use .github/workflows/deploy.yml (recommended), this file is unused.
+    #
+    # Run `npm run build` and commit dist/ before pulling, or run the build
+    # on the server. dist/ is generated output - it is not hand-edited.
     - export DEPLOYPATH=/home/otodriveafrica/public_html/
-    
-    # Copy website assets
-    - /bin/cp -R images $DEPLOYPATH
-    - /bin/cp -R css $DEPLOYPATH
-    - /bin/cp -R js $DEPLOYPATH
-    
-    # Copy HTML pages (including booking.html)
-    - /bin/cp *.html $DEPLOYPATH
-    
+
+    # Astro emits HTML, assets and the sitemap into dist/
+    - /bin/cp -R dist/. $DEPLOYPATH
+
     # Set proper permissions
-    - /bin/chmod 755 $DEPLOYPATH
     - /bin/find $DEPLOYPATH -type f -exec chmod 644 {} \;
     - /bin/find $DEPLOYPATH -type d -exec chmod 755 {} \;
-    
-    # Backup existing WordPress files (if any)
-    - /bin/mkdir -p $DEPLOYPATH/wp-backup
-    - /bin/cp -R $DEPLOYPATH/wp-* $DEPLOYPATH/wp-backup/ 2>/dev/null || true
-    
-    # Remove WordPress files (if any)
+
+    # Remove WordPress leftovers (if any)
     - /bin/rm -rf $DEPLOYPATH/index.php $DEPLOYPATH/wp-*.php 2>/dev/null || true
-    
-    # Note: Backend files (server.js, service-account.json, etc.) 
-    # will be deployed to Render, not cPanel 
+
+    # Note: the booking API (api/) deploys to Render, not cPanel.
