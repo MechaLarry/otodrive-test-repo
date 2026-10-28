@@ -7,9 +7,22 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Enable CORS for production domain
+// Browser origins allowed to call this API.
+// Add extra origins (e.g. the Render static-site URL) through the FRONTEND_URL
+// environment variable as a comma-separated list.
+const allowedOrigins = [
+  'https://otodriveafrica.com',
+  'https://www.otodriveafrica.com',
+  'http://localhost:4321', // Astro dev server
+  'http://localhost:5501',
+  ...(process.env.FRONTEND_URL || '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
+];
+
 app.use(cors({
-  origin: ['https://otodriveafrica.com', 'https://www.otodriveafrica.com', 'http://localhost:5501'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST'],
   credentials: true
 }));

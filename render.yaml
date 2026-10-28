@@ -1,0 +1,38 @@
+# Render Blueprint - hosts the Otodrive site on Render's free tier.
+#
+#   otodrive-website      Static Site - the Astro frontend (builds to dist/)
+#   otodrive-booking-api  Web Service - the booking API in /api
+#                                       (free plan: sleeps after 15 min idle,
+#                                        the first request then takes ~1 min)
+#
+# To deploy: push this file, then in the Render dashboard choose
+#   New +  ->  Blueprint  ->  connect this repository.
+services:
+  - type: web
+    name: otodrive-website
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+  - type: web
+    name: otodrive-booking-api
+    runtime: node
+    plan: free
+    rootDir: api
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      # Comma-separated list of browser origins allowed to call the API.
+      # The static site's URL must appear here or the booking form will fail
+      # with a CORS error. Update the value if Render assigns a different name.
+      - key: FRONTEND_URL
+        value: https://otodrive-website.onrender.com
+      # Paste the Google service-account JSON (single line) in the dashboard.
+      - key: GOOGLE_CREDENTIALS
+        sync: false
+      - key: CALENDAR_ID
+        sync: false
